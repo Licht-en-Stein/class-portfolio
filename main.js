@@ -48,15 +48,14 @@ router.post('/api/login', (req, res) => {
 
   else{
       //use schema.create to insert data into the db
-      console.log(Login);
-    /*  Login.find({}, (err, user) => {
+    Login.find({"email":req.body.email}, (err, user) => {
           console.log("the user   ////" + user)
         if (err) {
           console.log("error finding the email " + err)
           return res.json({error:"incorect email"})
         } else {
-            console.log("the user " + user + "the rest" +user.email+"// "+ user.password )
-          if (user.email === req.body.email && user.password === req.body.password) {
+            console.log("the user " + user + "the rest" +user[0].email+"// "+ user[0].password )
+          if (user[0].email === req.body.email && user[0].password === req.body.password) {
               console.log("it is working")
             return res.json(user)
           }
@@ -65,7 +64,7 @@ router.post('/api/login', (req, res) => {
               return res.json({error:"incorect password"})
             }
           }
-        });*/
+        });
       } 
 })
 
@@ -75,10 +74,11 @@ router.put('/edit', (req, res) =>{
 
 router.get('/portfolio', (req, res) => {
 
-	Login.find({}, function (req, res) {
-		console.log(res);
-		
-	})
+
+
+
+
+
 	
  	
 })
