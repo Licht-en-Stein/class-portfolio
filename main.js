@@ -76,9 +76,9 @@ router.get('/portfolio', (req, res) => {
     
 });
 
-router.delete('/delete', (req, res) => {
+router.delete('/delete/:userId', (req, res) => {
     // Retrieve and return all students from the database.
-    Login.remove(function(err, users){
+    Login.remove({_id: req.params.userId},function(err, users){
         if(err) {
             res.status(500).send({message: "Some error ocuured while retrieving users"});
         } else {
