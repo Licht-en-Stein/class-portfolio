@@ -63,6 +63,22 @@ router.post('/login', (req, res) => {
         });
       } 
 })
+router.post('/register', (req, res) => {
+      if(!req.body) {
+        res.status(400).send({message: "user can not be empty"});
+    }
+
+     newUser = new Login(req.body);
+      newUser.save(function(err) {
+        if(err) {
+          return res.send(err);
+        }
+        
+        return res.send({message: "user created successfully!"})
+    });
+
+
+})
 
 router.get('/portfolio', (req, res) => {
     // Retrieve and return all students from the database.
