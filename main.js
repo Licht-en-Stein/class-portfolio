@@ -54,7 +54,7 @@ router.post('/login', (req, res) => {
         } else {
           if (user[0].email === req.body.email && user[0].password === req.body.password) {
               console.log("it is working")
-            return res.json(user)
+            return res.status(200).send({message: `Welcome "Undefined" ${user[0].username}`});
           }
             else{
               return res.json({error:"incorect password"})
