@@ -3,8 +3,8 @@ const path = require('path');
 const bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 // const recipe = require('./app/controllers/project.controller.js');
-const Login = require('./app/models/database-Schema.js');
- //const Edit = require('./app/models/database-Schema.js').Edit;
+const Login = require('./app/models/loginDatabase-Schema.js');
+// const Edit = require('./app/models/editDatabase-Schema.js');
 
 // create express app
 const app = express();
@@ -40,7 +40,7 @@ router.get("/", (req, res) => {
   res.sendFile('index.html', { root: 'app/views' })
 });
 
-router.post('/api/login', (req, res) => {
+router.post('/login', (req, res) => {
 	console.log(req.body.email)
 
   if(!req.body.email || !req.body.password)
@@ -49,18 +49,14 @@ router.post('/api/login', (req, res) => {
   else{
       //use schema.create to insert data into the db
     Login.find({"email":req.body.email}, (err, user) => {
-          console.log("the user   ////" + user)
         if (err) {
-          console.log("error finding the email " + err)
           return res.json({error:"incorect email"})
         } else {
-            console.log("the user " + user + "the rest" +user[0].email+"// "+ user[0].password )
           if (user[0].email === req.body.email && user[0].password === req.body.password) {
               console.log("it is working")
             return res.json(user)
           }
             else{
-                   console.log("it is not")
               return res.json({error:"incorect password"})
             }
           }
@@ -75,13 +71,17 @@ router.put('/edit', (req, res) =>{
 router.get('/portfolio', (req, res) => {
 
 
+    // Retrieve and return all students from the database.
+    Login.find(function(err, users){
+        if(err) {
+            res.status(500).send({message: "Some error ocuured while retrieving users"});
+        } else {
+            res.send(users);
+        }
+    });
+    
+});
 
-
-
-
-	
- 	
-})
 
 
 
