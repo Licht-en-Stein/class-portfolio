@@ -64,13 +64,7 @@ router.post('/login', (req, res) => {
       } 
 })
 
-router.put('/edit', (req, res) =>{
-	
-})
-
 router.get('/portfolio', (req, res) => {
-
-
     // Retrieve and return all students from the database.
     Login.find(function(err, users){
         if(err) {
@@ -81,6 +75,23 @@ router.get('/portfolio', (req, res) => {
     });
     
 });
+
+router.delete('/delete', (req, res) => {
+    // Retrieve and return all students from the database.
+    Login.remove(function(err, users){
+        if(err) {
+            res.status(500).send({message: "Some error ocuured while retrieving users"});
+        } else {
+            res.send(users);
+        }
+    });
+    
+});
+
+router.put('/edit', (req, res) => {
+    
+});
+
 
 
 
