@@ -44,7 +44,7 @@ $(() => {
         .done((data) => {
           const array = [];
           array.push(data);
-          $('.row').append(mkCard(array));
+          $('#picfolio').append(mkCard(array));
         })
     } catch (err) {
       console.log('error', err)
