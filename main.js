@@ -1,7 +1,10 @@
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
-const recipe = require('./app/controllers/project.controller.js');
+var mongoose = require('mongoose');
+// const recipe = require('./app/controllers/project.controller.js');
+const Login = require('./app/models/loginDatabase-Schema.js');
+// const Edit = require('./app/models/editDatabase-Schema.js');
 
 // create express app
 const app = express();
@@ -11,6 +14,17 @@ app.use(bodyParser.urlencoded({ extended: true }))
 // parse application/json
 app.use(bodyParser.json())
 app.use("/", router);
+
+const dbConfig = require('./app/config/database.config.js');
+mongoose.connect(dbConfig.url);
+
+
+mongoose.connection.on('error', function() {
+    console.log('Could not connect to the database. Exiting now...');
+});
+mongoose.connection.once('open', function() {
+    console.log("Successfully connected to the database");
+})
 
 const port = 3000;
 
@@ -25,6 +39,51 @@ router.get('/api', (req, res) => {
 router.get("/", (req, res) => {
   res.sendFile('index.html', { root: 'app/views' })
 });
+
+router.post('/login', (req, res) => {
+	console.log(req.body.email)
+
+  if(!req.body.email || !req.body.password)
+      return res.json({ err: 'username and password required'});
+
+  else{
+      //use schema.create to insert data into the db
+    Login.find({"email":req.body.email}, (err, user) => {
+        if (err) {
+          return res.json({error:"incorect email"})
+        } else {
+          if (user[0].email === req.body.email && user[0].password === req.body.password) {
+              console.log("it is working")
+            return res.json(user)
+          }
+            else{
+              return res.json({error:"incorect password"})
+            }
+          }
+        });
+      } 
+})
+
+router.put('/edit', (req, res) =>{
+	
+})
+
+router.get('/portfolio', (req, res) => {
+
+
+    // Retrieve and return all students from the database.
+    Login.find(function(err, users){
+        if(err) {
+            res.status(500).send({message: "Some error ocuured while retrieving users"});
+        } else {
+            res.send(users);
+        }
+    });
+    
+});
+
+
+
 
 // listen for requests
 app.listen(port, () => {
