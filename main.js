@@ -53,13 +53,15 @@ router.post('/login', (req, res) => {
           return res.json({error:"incorect email"})
         } else {
           if (user[0].email === req.body.email && user[0].password === req.body.password) {
-              console.log("it is working")
             return res.json(user)
           }
+
             else{
-              return res.json({error:"incorect password"})
-            }
+              if (user[0].email !== req.body.email && user[0].password !== req.body.password) {
+            res.status(500).send({message: "Some error ocuured while retrieving users"});
           }
+          }
+        }
         });
       } 
 })
@@ -74,7 +76,7 @@ router.post('/register', (req, res) => {
           return res.send(err);
         }
         
-        return res.send({message: "user created successfully!"})
+        return res.send({message: "use created successfully!"})
     });
 
 
