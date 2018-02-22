@@ -17,6 +17,8 @@ body{
 .nav-tabs>li.active>a:hover, 
 .nav-tabs>li.active>a:focus {
     color: #555;
+    font-size: 1.5em;
+    text-decoration: none;
     cursor: default;
     background-color: #fff;
     border: 1px solid #ddd;
@@ -24,10 +26,19 @@ body{
 }
 
 .nav-tabs>li>a {
+    text-decoration: none;
     margin-right: 2px;
+    font-size: 1.5em;
     line-height: 1.42857143;
     border: 1px solid transparent;
     border-radius: 4px 4px 0 0;
+}
+
+.nav-tabs li .active {
+  color: green;
+  border: 2px solid #ddd;
+  border-bottom: none;
+
 }
 
 /* --- Modal Logn/REgistration ---*/
@@ -58,9 +69,23 @@ div #OR {
 
 .card {
   margin: 1em 0;
+  width: 22em;
+  border: none;
+  border-bottom: 1em solid grey;
+  border-radius: none;
 }
 
-/* --- Footer ---*/
+.card img {
+  height: 35vh;
+  width: auto;
+}
+
+.card-body {
+  border-bottom: 2em;
+  border-color: red;
+  height: auto;
+  min-height: 13vh;
+}
 
 footer {
   position: fixed;
