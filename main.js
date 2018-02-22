@@ -1,7 +1,10 @@
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
-const recipe = require('./app/controllers/project.controller.js');
+var mongoose = require('mongoose');
+// const recipe = require('./app/controllers/project.controller.js');
+const Login = require('./app/models/database-Schema.js');
+ //const Edit = require('./app/models/database-Schema.js').Edit;
 
 // create express app
 const app = express();
@@ -11,6 +14,17 @@ app.use(bodyParser.urlencoded({ extended: true }))
 // parse application/json
 app.use(bodyParser.json())
 app.use("/", router);
+
+const dbConfig = require('./app/config/database.config.js');
+mongoose.connect(dbConfig.url);
+
+
+mongoose.connection.on('error', function() {
+    console.log('Could not connect to the database. Exiting now...');
+});
+mongoose.connection.once('open', function() {
+    console.log("Successfully connected to the database");
+})
 
 const port = 3000;
 
@@ -25,6 +39,51 @@ router.get('/api', (req, res) => {
 router.get("/", (req, res) => {
   res.sendFile('index.html', { root: 'app/views' })
 });
+
+router.post('/api/login', (req, res) => {
+	console.log(req.body.email)
+
+  if(!req.body.email || !req.body.password)
+      return res.json({ err: 'username and password required'});
+
+  else{
+      //use schema.create to insert data into the db
+      console.log(Login);
+    /*  Login.find({}, (err, user) => {
+          console.log("the user   ////" + user)
+        if (err) {
+          console.log("error finding the email " + err)
+          return res.json({error:"incorect email"})
+        } else {
+            console.log("the user " + user + "the rest" +user.email+"// "+ user.password )
+          if (user.email === req.body.email && user.password === req.body.password) {
+              console.log("it is working")
+            return res.json(user)
+          }
+            else{
+                   console.log("it is not")
+              return res.json({error:"incorect password"})
+            }
+          }
+        });*/
+      } 
+})
+
+router.put('/edit', (req, res) =>{
+	
+})
+
+router.get('/portfolio', (req, res) => {
+
+	Login.find({}, function (req, res) {
+		console.log(res);
+		
+	})
+	
+ 	
+})
+
+
 
 // listen for requests
 app.listen(port, () => {
