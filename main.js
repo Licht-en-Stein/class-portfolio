@@ -53,7 +53,12 @@ router.post('/login', (req, res) => {
           return res.json({error:"incorect email"})
         } else {
           if (user[0].email === req.body.email && user[0].password === req.body.password) {
+<<<<<<< HEAD
             return res.json(user)
+=======
+              console.log("it is working")
+            return res.status(200).send({message: `Welcome "Undefined" ${user[0].username}`});
+>>>>>>> c59ca1166f0cc1f9f89dc6d430656469232715c6
           }
 
             else{
